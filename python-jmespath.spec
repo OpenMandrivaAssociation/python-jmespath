@@ -1,6 +1,6 @@
 Name:		python-jmespath
 Version:	1.0.1
-Release:	2
+Release:	3
 Source0:	https://files.pythonhosted.org/packages/source/j/jmespath/jmespath-%{version}.tar.gz
 Summary:	JSON Matching Expressions
 URL:		https://pypi.org/project/jmespath/
