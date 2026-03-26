@@ -1,28 +1,41 @@
+%define module jmespath
+%bcond tests 1
+
 Name:		python-jmespath
-Version:	1.0.1
-Release:	3
-Source0:	https://files.pythonhosted.org/packages/source/j/jmespath/jmespath-%{version}.tar.gz
+Version:	1.1.0
+Release:	1
 Summary:	JSON Matching Expressions
-URL:		https://pypi.org/project/jmespath/
 License:	MIT
 Group:		Development/Python
+URL:		https://github.com/jmespath/jmespath.py
+Source0:	%{URL}/archive/%{version}/%{name}-%{version}.tar.gz
+
+BuildSystem:	python
+BuildArch:	noarch
+BuildRequires:	python%{pyver}dist(hypothesis)
+BuildRequires:	python%{pyver}dist(packaging)
 BuildRequires:	python%{pyver}dist(pip)
 BuildRequires:	python%{pyver}dist(setuptools)
-BuildArch:	noarch
+BuildRequires:	python%{pyver}dist(wheel)
+%if %{with tests}
+BuildRequires:	python%{pyver}dist(pytest)
+%endif
 
 %description
-JSON Matching Expressions
+JSON Matching Expressions.
 
-%prep
-%autosetup -p1 -n jmespath-%{version}
+%prep -a
+# Remove bundled egg-info
+rm -rf %{module}.egg-info
 
-%build
-%py_build
-
-%install
-%py_install
+%if %{with tests}
+%check
+export CI=true
+export PYTHONPATH="%{buildroot}%{python_sitelib}:${PWD}"
+pytest
+%endif
 
 %files
 %{_bindir}/jp.py
-%{py_sitedir}/jmespath
-%{py_sitedir}/jmespath-*.*-info
+%{python_sitelib}/%{module}
+%{python_sitelib}/%{module}-%{version}*.*-info
