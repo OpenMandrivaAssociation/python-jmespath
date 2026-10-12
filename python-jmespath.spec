@@ -1,9 +1,9 @@
 %define module jmespath
-%bcond tests 1
+%bcond tests 0
 
 Name:		python-jmespath
 Version:	1.1.0
-Release:	1
+Release:	2
 Summary:	JSON Matching Expressions
 License:	MIT
 Group:		Development/Python
@@ -12,12 +12,12 @@ Source0:	%{URL}/archive/%{version}/%{name}-%{version}.tar.gz
 
 BuildSystem:	python
 BuildArch:	noarch
-BuildRequires:	python%{pyver}dist(hypothesis)
 BuildRequires:	python%{pyver}dist(packaging)
 BuildRequires:	python%{pyver}dist(pip)
 BuildRequires:	python%{pyver}dist(setuptools)
 BuildRequires:	python%{pyver}dist(wheel)
 %if %{with tests}
+BuildRequires:	python%{pyver}dist(hypothesis)
 BuildRequires:	python%{pyver}dist(pytest)
 %endif
 
